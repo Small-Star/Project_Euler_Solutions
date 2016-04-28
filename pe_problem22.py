@@ -5,6 +5,7 @@
 #Solution: Straighforward
 
 import os
+import functools
 
 def name_score(fname):
 
@@ -14,9 +15,18 @@ def name_score(fname):
 
     f = open(fname, "r")
 
-    names = str(f.read()).split(',"')
+    names = str(f.read()[1:]).split(',"') #Skip leading quote
     names = [n[:-1] for n in names]
-##    for n in names:
-##        print("poop",n)
 
-##    print(len(names))
+    cnt = 1
+    scores = []
+    
+    for n in sorted(names):
+        tot = sum([ord(c) - 64 for c in n])*cnt
+        scores.append(tot)
+        #print(n,sum([ord(c) - 64 for c in n]),cnt,tot)
+        cnt += 1
+        
+    print('The sum of name scores is: %s' %sum(scores))
+                       
+
